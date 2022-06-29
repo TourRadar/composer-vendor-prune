@@ -3,10 +3,8 @@ name: "Release"
 
 on:
   push:
-    tags:
-      - "v*"
     branches:
-      - "master"
+      - master
 
 jobs:
   pre-release:
