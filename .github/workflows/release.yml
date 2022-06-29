@@ -1,0 +1,47 @@
+---
+name: "pre-release"
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        php-version: [ 7.3 ]
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Composer Install
+        run: composer install
+
+      - name: Tests
+        run: ./vendor/bin/phpunit
+
+      - name: Install Box
+        run: |
+          curl -L -o box.phar https://github.com/humbug/box/releases/download/3.0.0-RC.0/box.phar
+          chmod +x ./box.ohar
+
+      - name: Compile
+        run: php -d phar.readonly=0 box.phar compile
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            bin/vendor-prune.phar
