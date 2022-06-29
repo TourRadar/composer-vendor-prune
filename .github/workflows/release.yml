@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Box
         run: |
-          curl -L -o box.phar https://github.com/humbug/box/releases/download/3.0.0-RC.0/box.phar
+          curl -L -o box.phar https://github.com/humbug/box/releases/download/3.14.0/box.phar
           chmod +x ./box.phar
 
       - name: Compile
