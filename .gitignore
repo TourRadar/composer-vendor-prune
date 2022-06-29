@@ -1,3 +1,4 @@
 /vendor
 /tests/fixture/prunable-vendor
 *.phar
+.idea/
